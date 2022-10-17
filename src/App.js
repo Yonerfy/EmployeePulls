@@ -5,15 +5,27 @@ import PollCreation from "./pollCreation/PollCreation";
 import Login from "./login/Login";
 import { Routes, Route, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "./features/sliceUser";
+import { fetchUser } from "./features/sliceUser";
 import { fetchQuestions } from "./features/sliceQuestions";
 import "./App.css";
+import { getUser } from "./features/sliceUser";
+import {
+  _getQuestions,
+  _getUsers,
+  _saveQuestion,
+  _saveQuestionAnswer,
+} from "./_DATA";
 
 function App() {
   const { user } = useParams;
   const dispatch = useDispatch();
-  dispatch(fetchUsers());
-  dispatch(fetchQuestions());
+  const users = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(fetchUser());
+    // fetchQuestions();
+  }, []);
+
   return (
     <div className="App">
       <Routes>
@@ -21,7 +33,7 @@ function App() {
         <Route path="/:user" element={<Dashbord />} />
         <Route path="/Leaderboard" element={<Leaderboard />} />
         <Route path="/PollCreation" element={<PollCreation />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login users={users} />} />
       </Routes>
     </div>
   );
