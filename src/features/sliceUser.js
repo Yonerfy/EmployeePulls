@@ -16,9 +16,7 @@ const sliceUser = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(fetchUser.fulfilled, (state, action) => {
-      // Add user to the state array
       return (state = action.payload);
     });
   },
@@ -26,8 +24,3 @@ const sliceUser = createSlice({
 
 export const { getUser } = sliceUser.actions;
 export default sliceUser.reducer;
-
-// export const fetchUsers = () => async (dispatch) => {
-//   const response = await _getUsers();
-//   return dispatch(getUser(response));
-// };

@@ -1,0 +1,12 @@
+.dashbord-nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dashbord-ul {
+  list-style: none;
+  display: flex;
+}
+.dashbord-ul li {
+  margin-left: 10px;
+}
