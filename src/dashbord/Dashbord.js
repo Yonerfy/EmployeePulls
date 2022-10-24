@@ -6,10 +6,26 @@ const Dashbord = () => {
   const { user } = useParams();
   const users = useSelector((state) => state.user);
   const questions = useSelector((state) => state.questions);
-  const currentUser = Object.values(users);
+  const userToArray = Object.values(users);
   const questionsToArray = Object.values(questions);
-  const userImg = currentUser.filter((u) => u.id === user);
-  console.log(questionsToArray);
+  const currentUser = userToArray.filter((u) => u.id === user);
+
+  const authorOfQuestion = questionsToArray.filter((question) =>
+    currentUser[0].questions.includes(question.id)
+  );
+
+  const doneQuestionEl = authorOfQuestion.map((question) => {
+    const date = new Date(question.timestamp);
+    return (
+      <div key={question.id}>
+        <h3>{question.author}</h3>
+        <p>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}
+        ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`}</p>
+        <button>Show</button>
+      </div>
+    );
+  });
+  // console.log();
 
   const questionEl = questionsToArray.map((question) => {
     const date = new Date(question.timestamp);
@@ -40,7 +56,7 @@ const Dashbord = () => {
           </ul>
         </nav>
         <Link to="/">
-          <img src={userImg[0].avatarURL} width="40" />
+          <img src={currentUser[0].avatarURL} width="40" />
           Login out
         </Link>
       </div>
@@ -50,6 +66,7 @@ const Dashbord = () => {
       </section>
       <section>
         <h1>Done</h1>
+        {doneQuestionEl}
       </section>
     </div>
   );
