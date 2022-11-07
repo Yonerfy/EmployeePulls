@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import Dashbord from "./dashbord/Dashbord";
-import Leaderboard from "./leaderboard/Leaderboard";
-import PollCreation from "./pollCreation/PollCreation";
-import Login from "./login/Login";
+import Dashbord from "./component/dashbord/Dashbord";
+import Leaderboard from "./component/leaderboard/Leaderboard";
+import PollCreation from "./component/pollCreation/PollCreation";
+import Login from "./component/login/Login";
 import { Routes, Route, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./features/sliceUser";

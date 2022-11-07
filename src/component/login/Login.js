@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { fetchUsers } from "../features/sliceUser";
+
 import { Link, useParams } from "react-router-dom";
-import { fetchQuestions } from "../features/sliceQuestions";
 
 const Login = ({ users }) => {
   const dispatch = useDispatch();

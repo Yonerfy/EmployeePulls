@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./dashbord.css";
+import PollQuestion from "../pollQuestion/PollQuestion";
 
 const Dashbord = () => {
   const { user } = useParams();
@@ -9,6 +11,9 @@ const Dashbord = () => {
   const userToArray = Object.values(users);
   const questionsToArray = Object.values(questions);
   const currentUser = userToArray.filter((u) => u.id === user);
+  const [showPoll, setShowPoll] = useState(true);
+  const [authorName, setAuthorName] = useState("");
+  const [questionId, setQuestionID] = useState("");
 
   const authorOfQuestion = questionsToArray.filter((question) =>
     currentUser[0].questions.includes(question.id)
@@ -25,7 +30,12 @@ const Dashbord = () => {
       </div>
     );
   });
-  // console.log();
+  const handlerShowQuestionBtn = (e) => {
+    console.log("button cliked!");
+    setShowPoll((prevState) => (prevState = !prevState));
+    setAuthorName(e.target.name);
+    setQuestionID(e.target.id);
+  };
 
   const questionEl = questionsToArray.map((question) => {
     const date = new Date(question.timestamp);
@@ -34,7 +44,13 @@ const Dashbord = () => {
         <h3>{question.author}</h3>
         <p>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}
         ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`}</p>
-        <button>Show</button>
+        <button
+          onClick={handlerShowQuestionBtn}
+          name={question.author}
+          id={question.id}
+        >
+          Show
+        </button>
       </div>
     );
   });
@@ -62,7 +78,16 @@ const Dashbord = () => {
       </div>
       <section>
         <h1>New Question</h1>
-        {questionEl}
+        {showPoll ? (
+          questionEl
+        ) : (
+          <PollQuestion
+            userToArray={userToArray}
+            questionsToArray={questionsToArray}
+            authorName={authorName}
+            questionId={questionId}
+          />
+        )}
       </section>
       <section>
         <h1>Done</h1>
